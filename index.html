@@ -3,216 +3,235 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Universal Education Empowerment (UEE) promotes fair and inclusive access to high-quality education for marginalized and underserved communities worldwide.">
+  <meta property="og:title" content="Universal Education Empowerment">
+  <meta property="og:description" content="Promoting universal access to quality education, especially for marginalized communities.">
+  <meta property="og:image" content="Website Folder/UEE.png">
+  <meta property="og:type" content="website">
   <title>Universal Education Empowerment (UEE)</title>
   <link rel="icon" href="Website Folder/UEE.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            burgundy: '#800020',
+            gold: '#FFD700',
+          }
+        }
+      }
+    }
+  </script>
   <link rel="stylesheet" href="styles.css">
   <script defer src="script.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 light">
 
- <!-- Header with Toggle Button -->
-<header class="bg-gradient-to-r from-gray-800 via-gray-600 to-gray-800 text-white shadow-md sticky top-0 z-50">
-  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-    <div class="flex items-center ml-[-10px]">
-      <img src="Website Folder/UEE.png" alt="UEE Logo" class="h-10 w-10 mr-3">
-      <h1 class="text-2xl font-bold">Universal Education Empowerment</h1>
-    </div>
-    <!-- Desktop Nav -->
-    <nav class="hidden md:flex gap-4">
-      <a href="#mission" class="px-4 text-white hover:text-gray-300 transition duration-300">Mission</a>
-      <a href="#programs" class="px-4 text-white hover:text-gray-300 transition duration-300">Programs</a>
-      <a href="#contact" class="px-4 text-white hover:text-gray-300 transition duration-300">Contact</a>
-    </nav>
-    <div class="hidden md:flex gap-4">
-      <button id="toggleMode" class="bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg">Toggle Dark Mode</button>
-      <button id="reduceMotion" class="bg-gray-600 text-white px-4 py-2 rounded-lg shadow-lg">Reduce Motion: OFF</button>
-    </div>
-    <!-- Mobile Hamburger -->
-    <button id="mobileMenuBtn" aria-label="Open navigation menu" aria-expanded="false" class="md:hidden flex flex-col gap-1.5 p-2">
-      <span class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
-      <span class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
-      <span class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
-    </button>
-  </div>
-  <!-- Mobile Menu -->
-  <div id="mobileMenu" class="hidden md:hidden bg-gray-700 px-6 pb-4">
-    <nav class="flex flex-col gap-2 mb-3">
-      <a href="#mission" class="text-white py-2 hover:text-gray-300 transition duration-300">Mission</a>
-      <a href="#programs" class="text-white py-2 hover:text-gray-300 transition duration-300">Programs</a>
-      <a href="#contact" class="text-white py-2 hover:text-gray-300 transition duration-300">Contact</a>
-    </nav>
-    <div class="flex gap-3">
-      <button id="toggleModeMobile" class="bg-gray-800 text-white px-3 py-2 rounded-lg shadow-lg text-sm">Toggle Dark Mode</button>
-      <button id="reduceMotionMobile" class="bg-gray-600 text-white px-3 py-2 rounded-lg shadow-lg text-sm">Reduce Motion: OFF</button>
-    </div>
-  </div>
-</header>
+  <!-- Skip to main content (keyboard accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-
-  <!-- Hero Section -->
-  <section class="hero bg-cover bg-center h-screen flex items-center justify-center fade-in-section" data-scroll>
-    <div class="text-center px-6">
-      <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Empowering Education for All</h2>
-      <p class="mt-4 text-lg text-gray-800 dark:text-gray-200">Promoting universal access to quality education, especially for marginalized communities.</p>
-      <a href="#mission" class="mt-6 inline-block bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-gray-700">Learn More</a>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-gray-800 via-gray-600 to-gray-800 text-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center ml-[-10px]">
+        <img src="Website Folder/UEE.png" alt="UEE Logo" class="h-10 w-10 mr-3" loading="lazy">
+        <h1 class="text-2xl font-bold">Universal Education Empowerment</h1>
+      </div>
+      <!-- Desktop Nav -->
+      <nav aria-label="Primary navigation" class="hidden md:flex gap-4">
+        <a href="#mission" class="px-4 text-white hover:text-gray-300 transition duration-300">Mission</a>
+        <a href="#programs" class="px-4 text-white hover:text-gray-300 transition duration-300">Programs</a>
+        <a href="#contact" class="px-4 text-white hover:text-gray-300 transition duration-300">Contact</a>
+      </nav>
+      <div class="hidden md:flex gap-4">
+        <button id="toggleMode" aria-pressed="false" class="bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg">Toggle Dark Mode</button>
+        <button id="reduceMotion" aria-pressed="false" class="bg-gray-600 text-white px-4 py-2 rounded-lg shadow-lg">Reduce Motion: OFF</button>
+      </div>
+      <!-- Mobile Hamburger -->
+      <button id="mobileMenuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu" class="md:hidden flex flex-col gap-1.5 p-2">
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
+      </button>
     </div>
-  </section>
-
-  <!-- Call to Action and Signatures Section -->
-  <section class="container mx-auto px-6 py-16 text-center md:text-left flex flex-col md:flex-row items-start justify-between fade-in-section" data-scroll>
-    <div class="w-full md:w-5/12 mb-8 md:mb-0">
-      <div class="bg-gradient-to-r from-burgundy to-gold text-gray-900 dark:text-white p-8 rounded-lg shadow-lg">
-        <h3 class="text-3xl font-semibold mb-4">Join Our Cause</h3>
-        <p class="text-lg">Join our mission to make high-quality education accessible to all! Sign the petition below and help make a meaningful difference in the lives of millions.</p>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-gray-700 px-6 pb-4" role="navigation" aria-label="Mobile navigation">
+      <nav class="flex flex-col gap-2 mb-3">
+        <a href="#mission" class="text-white py-2 hover:text-gray-300 transition duration-300">Mission</a>
+        <a href="#programs" class="text-white py-2 hover:text-gray-300 transition duration-300">Programs</a>
+        <a href="#contact" class="text-white py-2 hover:text-gray-300 transition duration-300">Contact</a>
+      </nav>
+      <div class="flex gap-3">
+        <button id="toggleModeMobile" aria-pressed="false" class="bg-gray-800 text-white px-3 py-2 rounded-lg shadow-lg text-sm">Toggle Dark Mode</button>
+        <button id="reduceMotionMobile" aria-pressed="false" class="bg-gray-600 text-white px-3 py-2 rounded-lg shadow-lg text-sm">Reduce Motion: OFF</button>
       </div>
     </div>
-    <div id="signatureList" class="w-full md:w-6/12 bg-white shadow-lg rounded-lg p-8 ml-0 md:ml-4 h-auto overflow-y-auto signature-list-box">
-      <h3 class="text-2xl font-semibold text-gray-900 mb-6 border-b border-gray-300 pb-4">Signatures</h3>
-      <p id="signatureCount" class="text-gray-700 mb-4 font-medium">Total Signatures: 0</p>
-      <ul class="list-disc pl-6 space-y-3">
-        <!-- Signatures will be added dynamically via JavaScript -->
-      </ul>
-    </div>
-  </section>
+  </header>
 
+  <main id="main-content">
 
-
-  <!-- Mission Section -->
-  <section id="mission" class="container mx-auto px-6 py-16 text-center fade-in-section" data-scroll>
-    <h3 class="text-3xl font-semibold text-gray-900">Our Mission</h3>
-    <p class="mt-4 text-gray-600">Our goal at Universal Education Empowerment (UEE) is to promote fair and inclusive access to high-quality education so that people can realize their full potential, change their lives, and build a better future. Particularly for disadvantaged and marginalized populations, we are committed to closing educational disparities, developing leadership, and promoting lifelong learning. We want to create a society where opportunities are open to everyone and knowledge has no bounds via cooperation, creativity, and a common dedication to progress.</p>
-  </section>
-
- <!-- Programs Section -->
-<section id="programs" class="py-16 fade-in-section bg-gradient-to-r from-indigo-100 to-blue-100" data-scroll>
-  <div class="container mx-auto px-6 text-center">
-    <h3 class="text-4xl font-extrabold text-gray-800 mb-10">Our Programs</h3>
-    <div class="mt-8 flex justify-center flex-wrap gap-8">
-
-      <!-- Community Learning & Advancement Tile -->
-      <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
-        <a href="community-learning.html" class="program-card overflow-hidden rounded-lg shadow-lg">
-          <div class="relative">
-            <img src="PhotoHoldersTiles/Collaboration.png" alt="Collaboration" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300"></div>
-          </div>
-          <div class="p-6">
-            <h4 class="text-lg font-bold text-gray-900">Community Learning & Advancement</h4>
-            <p class="mt-2 text-gray-600">This program empowers individuals and communities by providing accessible learning opportunities, resources, and skill-building initiatives.</p>
-          </div>
-        </a>
+    <!-- Hero Section -->
+    <section class="hero bg-cover bg-center h-screen flex items-center justify-center fade-in-section" data-scroll>
+      <div class="text-center px-6">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Empowering Education for All</h2>
+        <p class="mt-4 text-lg text-gray-800 dark:text-gray-200">Promoting universal access to quality education, especially for marginalized communities.</p>
+        <a href="#mission" class="mt-6 inline-block bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-gray-700 transition duration-300">Learn More</a>
       </div>
+    </section>
 
-      <!-- Youth Leadership & Empowerment Tile -->
-      <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
-        <a href="youth-leadership.html" class="program-card overflow-hidden rounded-lg shadow-lg">
-          <div class="relative">
-            <img src="PhotoHoldersTiles/Leadership.png" alt="Leadership" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300"></div>
-          </div>
-          <div class="p-6">
-            <h4 class="text-lg font-bold text-gray-900">Youth Leadership & Empowerment</h4>
-            <p class="mt-2 text-gray-600">This program equips young people with leadership skills and opportunities, empowering them to create meaningful change in their communities.</p>
-          </div>
-        </a>
+    <!-- Call to Action and Signatures Section -->
+    <section class="container mx-auto px-6 py-16 text-center md:text-left flex flex-col md:flex-row items-start justify-between fade-in-section" data-scroll>
+      <div class="w-full md:w-5/12 mb-8 md:mb-0">
+        <div class="bg-gradient-to-r from-burgundy to-gold p-8 rounded-lg shadow-lg">
+          <h3 class="text-3xl font-semibold mb-4 text-white">Join Our Cause</h3>
+          <p class="text-lg text-white">Join our mission to make high-quality education accessible to all! Sign the petition below and help make a meaningful difference in the lives of millions.</p>
+        </div>
       </div>
-
-      <!-- Scholarship Programs Tile -->
-      <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
-        <a href="scholarship-program.html" class="program-card overflow-hidden rounded-lg shadow-lg">
-          <div class="relative">
-            <img src="PhotoHoldersTiles/Scholarship.png" alt="Scholarship" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300"></div>
-          </div>
-          <div class="p-6">
-            <h4 class="text-lg font-bold text-gray-900">Scholarship Programs</h4>
-            <p class="mt-2 text-gray-600">Provides financial aid to students from underrepresented communities, removing barriers to education and opening doors to brighter futures.</p>
-          </div>
-        </a>
+      <div id="signatureList" class="w-full md:w-6/12 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 ml-0 md:ml-4 h-auto overflow-y-auto signature-list-box">
+        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 border-b border-gray-300 dark:border-gray-600 pb-4">Signatures</h3>
+        <p id="signatureCount" aria-live="polite" class="text-gray-700 dark:text-gray-300 mb-4 font-medium">Total Signatures: 0</p>
+        <ul class="list-disc pl-6 space-y-3">
+          <!-- Signatures added dynamically via JavaScript -->
+        </ul>
       </div>
+    </section>
 
-      <!-- Workshops & Training Programs Tile -->
-      <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
-        <a href="workshops.html" class="program-card overflow-hidden rounded-lg shadow-lg">
-          <div class="relative">
-            <img src="PhotoHoldersTiles/WorkshopTraining.png" alt="Workshops" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300"></div>
+    <!-- Mission Section -->
+    <section id="mission" class="container mx-auto px-6 py-16 text-center fade-in-section" data-scroll>
+      <h3 class="text-3xl font-semibold text-burgundy">Our Mission</h3>
+      <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Our goal at Universal Education Empowerment (UEE) is to promote fair and inclusive access to high-quality education so that people can realize their full potential, change their lives, and build a better future. Particularly for disadvantaged and marginalized populations, we are committed to closing educational disparities, developing leadership, and promoting lifelong learning. We want to create a society where opportunities are open to everyone and knowledge has no bounds via cooperation, creativity, and a common dedication to progress.</p>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="py-16 fade-in-section bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-gray-800 dark:to-gray-700" data-scroll>
+      <div class="container mx-auto px-6 text-center">
+        <h3 class="text-4xl font-extrabold text-gray-800 dark:text-white mb-10">Our Programs</h3>
+        <div class="mt-8 flex justify-center flex-wrap gap-8">
+
+          <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
+            <a href="community-learning.html" class="program-card overflow-hidden rounded-lg shadow-lg block">
+              <div class="relative">
+                <img src="PhotoHoldersTiles/Collaboration.png" alt="Community members collaborating in a learning session" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300" aria-hidden="true"></div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white">Community Learning & Advancement</h4>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">This program empowers individuals and communities by providing accessible learning opportunities, resources, and skill-building initiatives.</p>
+              </div>
+            </a>
           </div>
-          <div class="p-6">
-            <h4 class="text-lg font-bold text-gray-900">Workshops & Training Programs</h4>
-            <p class="mt-2 text-gray-600">Providing various workshops and training programs to enhance participants' skills and boost career readiness.</p>
+
+          <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
+            <a href="youth-leadership.html" class="program-card overflow-hidden rounded-lg shadow-lg block">
+              <div class="relative">
+                <img src="PhotoHoldersTiles/Leadership.png" alt="Young leaders participating in a leadership program" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300" aria-hidden="true"></div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white">Youth Leadership & Empowerment</h4>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">This program equips young people with leadership skills and opportunities, empowering them to create meaningful change in their communities.</p>
+              </div>
+            </a>
           </div>
-        </a>
+
+          <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
+            <a href="scholarship-program.html" class="program-card overflow-hidden rounded-lg shadow-lg block">
+              <div class="relative">
+                <img src="PhotoHoldersTiles/Scholarship.png" alt="Student receiving a scholarship award" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300" aria-hidden="true"></div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white">Scholarship Programs</h4>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">Provides financial aid to students from underrepresented communities, removing barriers to education and opening doors to brighter futures.</p>
+              </div>
+            </a>
+          </div>
+
+          <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
+            <a href="workshops.html" class="program-card overflow-hidden rounded-lg shadow-lg block">
+              <div class="relative">
+                <img src="PhotoHoldersTiles/WorkshopTraining.png" alt="Participants engaged in a workshop training session" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300" aria-hidden="true"></div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white">Workshops & Training Programs</h4>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">Providing various workshops and training programs to enhance participants' skills and boost career readiness.</p>
+              </div>
+            </a>
+          </div>
+
+          <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
+            <a href="digital-skills.html" class="program-card overflow-hidden rounded-lg shadow-lg block">
+              <div class="relative">
+                <img src="PhotoHoldersTiles/DigitalTraining.jpg" alt="Person learning digital skills on a computer" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300" aria-hidden="true"></div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white">Digital Skills Training</h4>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">Offering essential digital skills, from basic computer literacy to advanced tools, preparing participants for a technology-driven world.</p>
+              </div>
+            </a>
+          </div>
+
+          <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
+            <a href="career-development.html" class="program-card overflow-hidden rounded-lg shadow-lg block">
+              <div class="relative">
+                <img src="PhotoHoldersTiles/CareerDevelopment.png" alt="Professional preparing for a career development session" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300" aria-hidden="true"></div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white">Career Development Training</h4>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">Focused on helping participants build resumes, prepare for interviews, and develop essential career skills for long-term success.</p>
+              </div>
+            </a>
+          </div>
+
+        </div>
       </div>
+    </section>
 
-      <!-- Digital Skills Training Tile -->
-      <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
-        <a href="digital-skills.html" class="program-card overflow-hidden rounded-lg shadow-lg">
-          <div class="relative">
-            <img src="PhotoHoldersTiles/DigitalTraining.jpg" alt="Digital Skills Training" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300"></div>
+    <!-- Petition Form Section -->
+    <section id="contact" class="container mx-auto px-6 py-16 text-center fade-in-section" data-scroll>
+      <h3 class="text-4xl font-bold text-gray-900 dark:text-white">Sign the Petition</h3>
+      <p class="text-lg text-gray-600 dark:text-gray-400 mt-4 max-w-md mx-auto">Support our cause for universal access to high-quality education by signing the petition below.</p>
+      <form id="petitionForm" novalidate class="bg-white dark:bg-gray-800 shadow-2xl rounded-lg p-8 mt-8 max-w-2xl mx-auto border border-gray-200 dark:border-gray-600">
+        <div class="grid grid-cols-2 gap-6 mb-6">
+          <div class="col-span-2 md:col-span-1">
+            <label for="name" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Name: <span class="text-red-500" aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg" placeholder="Your Full Name" aria-required="true">
           </div>
-          <div class="p-6">
-            <h4 class="text-lg font-bold text-gray-900">Digital Skills Training</h4>
-            <p class="mt-2 text-gray-600">Offering essential digital skills, from basic computer literacy to advanced tools, preparing participants for a technology-driven world.</p>
+          <div class="col-span-2 md:col-span-1">
+            <label for="email" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Email: <span class="text-red-500" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg" placeholder="Your Email" aria-required="true">
           </div>
-        </a>
-      </div>
+        </div>
+        <div class="mb-6">
+          <label for="message" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Message (optional):</label>
+          <textarea id="message" name="message" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg h-32" placeholder="Write a message of support..."></textarea>
+        </div>
+        <div role="alert" id="formError" class="hidden mb-4 p-3 bg-red-50 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-200 text-sm"></div>
+        <button type="submit" class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
+          Sign Now
+        </button>
+      </form>
+    </section>
 
-      <!-- Career Development Training Tile -->
-      <div class="w-full md:w-1/3 lg:w-1/4 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl">
-        <a href="career-development.html" class="program-card overflow-hidden rounded-lg shadow-lg">
-          <div class="relative">
-            <img src="PhotoHoldersTiles/CareerDevelopment.png" alt="Career Development Training" class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 transition-opacity hover:opacity-50 duration-300"></div>
-          </div>
-          <div class="p-6">
-            <h4 class="text-lg font-bold text-gray-900">Career Development Training</h4>
-            <p class="mt-2 text-gray-600">Focused on helping participants build resumes, prepare for interviews, and develop essential career skills for long-term success.</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+  </main>
 
-
-
-  <!-- Petition Form Section -->
-<section id="contact" class="container mx-auto px-6 py-16 text-center fade-in-section" data-scroll>
-  <h3 class="text-4xl font-bold text-gray-900">Sign the Petition</h3>
-  <p class="text-lg text-gray-600 mt-4 max-w-md mx-auto">Support our cause for universal access to high-quality education by signing the petition below.</p>
-  <form id="petitionForm" class="bg-white shadow-2xl rounded-lg p-8 mt-8 max-w-2xl mx-auto border border-gray-200">
-    <div class="grid grid-cols-2 gap-6 mb-6">
-      <div class="col-span-2 md:col-span-1">
-        <label for="name" class="block text-gray-700 font-medium mb-2">Name:</label>
-        <input type="text" id="name" name="name" required class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 rounded-lg" placeholder="Your Full Name">
-      </div>
-      <div class="col-span-2 md:col-span-1">
-        <label for="email" class="block text-gray-700 font-medium mb-2">Email:</label>
-        <input type="email" id="email" name="email" required class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 rounded-lg" placeholder="Your Email">
-      </div>
-    </div>
-    <div class="mb-6">
-      <label for="message" class="block text-gray-700 font-medium mb-2">Message:</label>
-      <textarea id="message" name="message" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 rounded-lg h-32" placeholder="Write a message of support..."></textarea>
-    </div>
-    <button type="submit" class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
-      Sign Now
-    </button>
-  </form>
-</section>
-
-  <!-- Modal Structure -->
-  <div id="thankYouModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
-      <button id="closeModal" aria-label="Close dialog" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">&times;</button>
-      <h3 id="modalTitle" class="text-xl font-semibold text-gray-900 mb-4">Thank You!</h3>
-      <p id="modalMessage" class="text-gray-700 mb-4"></p>
-      <img id="modalImage" src="Assets/giphy.gif" alt="Thank You" class="w-32 h-32 mx-auto transform transition-transform duration-500 hidden">
+  <!-- Thank You Modal -->
+  <div id="thankYouModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative mx-4">
+      <button id="closeModal" aria-label="Close dialog" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 dark:hover:text-white w-9 h-9 flex items-center justify-center rounded-full text-xl">&times;</button>
+      <h3 id="modalTitle" class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Thank You!</h3>
+      <p id="modalMessage" class="text-gray-700 dark:text-gray-300 mb-4"></p>
+      <img id="modalImage" src="Assets/giphy.gif" alt="Celebration animation" class="w-32 h-32 mx-auto transform transition-transform duration-500 hidden" loading="lazy">
     </div>
   </div>
+
+  <!-- Back to Top -->
+  <button id="backToTop" aria-label="Back to top" class="hidden fixed bottom-6 right-6 bg-burgundy text-white w-12 h-12 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-xl transition-all duration-300 z-40">&#8679;</button>
 
   <!-- Footer -->
   <footer class="bg-gray-800 text-gray-400 py-10">
@@ -223,18 +242,17 @@
           <p class="mb-4">Building a brighter future through accessible education for all. Connect with us to join our mission.</p>
           <p>&copy; 2026 Universal Education Empowerment. All rights reserved.</p>
         </div>
-
         <div class="md:w-1/2 mt-8 md:mt-0">
           <h3 class="text-xl font-semibold text-white mb-4 text-center md:text-left">Contact Us</h3>
-          <form id="footerContactForm" class="bg-gray-700 p-6 rounded-lg shadow-lg">
-            <label for="footerName" class="block text-gray-300">Name:</label>
-            <input type="text" id="footerName" name="footerName" required class="block w-full p-3 mb-4 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400">
-            <label for="footerEmail" class="block text-gray-300">Email:</label>
-            <input type="email" id="footerEmail" name="footerEmail" required class="block w-full p-3 mb-4 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400">
-            <label for="footerMessage" class="block text-gray-300">Message:</label>
+          <form id="footerContactForm" novalidate class="bg-gray-700 p-6 rounded-lg shadow-lg">
+            <label for="footerName" class="block text-gray-300 mb-1">Name: <span class="text-red-400" aria-hidden="true">*</span></label>
+            <input type="text" id="footerName" name="footerName" required autocomplete="name" class="block w-full p-3 mb-4 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400">
+            <label for="footerEmail" class="block text-gray-300 mb-1">Email: <span class="text-red-400" aria-hidden="true">*</span></label>
+            <input type="email" id="footerEmail" name="footerEmail" required autocomplete="email" class="block w-full p-3 mb-4 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400">
+            <label for="footerMessage" class="block text-gray-300 mb-1">Message: <span class="text-red-400" aria-hidden="true">*</span></label>
             <textarea id="footerMessage" name="footerMessage" required class="block w-full p-3 mb-4 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400"></textarea>
-            <button type="submit" class="w-full bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-700">Send Message</button>
-            <p id="footerFormSuccess" class="hidden mt-3 text-green-400 font-medium text-center">Thank you for reaching out! We will get back to you soon.</p>
+            <button type="submit" class="w-full bg-gray-900 text-white p-3 rounded-lg shadow-lg hover:bg-gray-600 transition duration-300">Send Message</button>
+            <p id="footerFormSuccess" role="status" class="hidden mt-3 text-green-400 font-medium text-center">Thank you for reaching out! We will get back to you soon.</p>
           </form>
         </div>
       </div>

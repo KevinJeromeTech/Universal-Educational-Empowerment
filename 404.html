@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Page Not Found — UEE</title>
+  <link rel="icon" href="Website Folder/UEE.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            burgundy: '#800020',
+            gold: '#FFD700',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 text-gray-800 light min-h-screen flex flex-col">
+
+  <header class="bg-gradient-to-r from-gray-800 via-gray-600 to-gray-800 text-white shadow-md">
+    <div class="container mx-auto px-6 py-4 flex items-center">
+      <img src="Website Folder/UEE.png" alt="UEE Logo" class="h-10 w-10 mr-3" loading="lazy">
+      <h1 class="text-2xl font-bold">Universal Education Empowerment</h1>
+    </div>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center px-6 py-24 text-center">
+    <div>
+      <p class="text-8xl font-extrabold" style="color:#800020;">404</p>
+      <h2 class="mt-4 text-3xl font-bold text-gray-800">Page Not Found</h2>
+      <p class="mt-4 text-gray-600 max-w-md mx-auto">Sorry, we couldn't find the page you were looking for. It may have been moved or the link might be incorrect.</p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="index.html" class="inline-block text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105" style="background-color: #800020;">Go to Home</a>
+        <a href="index.html#programs" class="inline-block font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105" style="background: linear-gradient(to right, #FFD700, #b39b00); color: #800020;">View Our Programs</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-gray-400 py-6 text-center">
+    <p>&copy; 2026 Universal Education Empowerment. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

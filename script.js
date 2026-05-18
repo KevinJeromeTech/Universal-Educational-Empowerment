@@ -9,9 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const signatureList = document.querySelector('#signatureList ul');
     const signatureCountDisplay = document.getElementById('signatureCount');
     const modal = document.getElementById('thankYouModal');
-    const closeModal = document.getElementById('closeModal');
+    const closeModalBtn = document.getElementById('closeModal');
     const modalMessage = document.getElementById('modalMessage');
     const modalImage = document.getElementById('modalImage');
+    const formError = document.getElementById('formError');
+    const backToTopBtn = document.getElementById('backToTop');
 
     // --- Mobile menu ---
     mobileMenuBtn.addEventListener('click', () => {
@@ -20,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
     });
 
-    // Close mobile menu when a nav link is clicked
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
@@ -32,14 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyDarkMode(isDark) {
       document.body.classList.toggle('dark', isDark);
       document.body.classList.toggle('light', !isDark);
+      // Tailwind v3 dark mode requires the class on <html> when darkMode: 'class'
+      document.documentElement.classList.toggle('dark', isDark);
+      const pressed = String(isDark);
+      toggleModeButton.setAttribute('aria-pressed', pressed);
+      toggleModeMobileButton.setAttribute('aria-pressed', pressed);
       localStorage.setItem('darkMode', isDark ? '1' : '0');
     }
 
-    const savedDark = localStorage.getItem('darkMode') === '1';
-    applyDarkMode(savedDark);
+    applyDarkMode(localStorage.getItem('darkMode') === '1');
 
-    toggleModeButton.addEventListener('click', () => applyDarkMode(!document.body.classList.contains('dark')));
-    toggleModeMobileButton.addEventListener('click', () => applyDarkMode(!document.body.classList.contains('dark')));
+    toggleModeButton.addEventListener('click', () => applyDarkMode(!document.documentElement.classList.contains('dark')));
+    toggleModeMobileButton.addEventListener('click', () => applyDarkMode(!document.documentElement.classList.contains('dark')));
 
     // --- Reduce motion ---
     function applyReduceMotion(reduce) {
@@ -47,11 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const label = reduce ? 'Enable Motion' : 'Reduce Motion: OFF';
       reduceMotionButton.textContent = label;
       reduceMotionMobileButton.textContent = label;
+      reduceMotionButton.setAttribute('aria-pressed', String(reduce));
+      reduceMotionMobileButton.setAttribute('aria-pressed', String(reduce));
       localStorage.setItem('reduceMotion', reduce ? '1' : '0');
     }
 
-    const savedMotion = localStorage.getItem('reduceMotion') === '1';
-    applyReduceMotion(savedMotion);
+    applyReduceMotion(localStorage.getItem('reduceMotion') === '1');
 
     reduceMotionButton.addEventListener('click', () => applyReduceMotion(!document.body.classList.contains('reduce-motion')));
     reduceMotionMobileButton.addEventListener('click', () => applyReduceMotion(!document.body.classList.contains('reduce-motion')));
@@ -64,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       signatures.forEach(({ name, message }) => {
         const li = document.createElement('li');
         li.textContent = message ? `${name} — ${message}` : name;
-        li.classList.add('text-gray-900');
+        li.classList.add('text-gray-900', 'dark:text-gray-100');
         signatureList.appendChild(li);
       });
       signatureCountDisplay.textContent = `Total Signatures: ${signatures.length}`;
@@ -80,8 +86,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById('email').value.trim();
       const message = document.getElementById('message').value.trim();
 
-      if (name === '' || !validateEmail(email)) {
-        highlightInvalidFields(name, email);
+      removeHighlights();
+      formError.classList.add('hidden');
+
+      const errors = [];
+      if (!name) errors.push('Name is required.');
+      if (!validateEmail(email)) errors.push('A valid email address is required.');
+
+      if (errors.length > 0) {
+        formError.textContent = errors.join(' ');
+        formError.classList.remove('hidden');
+        if (!name) document.getElementById('name').classList.add('invalid-input');
+        if (!validateEmail(email)) document.getElementById('email').classList.add('invalid-input');
+        formError.focus();
         return;
       }
 
@@ -89,34 +106,43 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('signatures', JSON.stringify(signatures));
       renderSignatures();
 
-      modalMessage.textContent = `Thank you, ${name}, for your support!`;
+      openModal(`Thank you, ${name}, for your support!`);
+      form.reset();
+    });
+
+    // --- Modal ---
+    function openModal(message) {
+      modalMessage.textContent = message;
       modal.classList.remove('hidden');
       modalImage.classList.remove('hidden');
       modalImage.classList.add('animated');
+      closeModalBtn.focus();
 
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        modalImage.classList.remove('animated');
-      }, 5000);
+      setTimeout(closeModal, 5000);
+    }
 
-      form.reset();
-      removeHighlights();
-    });
-
-    // --- Modal close ---
-    closeModal.addEventListener('click', () => {
+    function closeModal() {
       modal.classList.add('hidden');
       modalImage.classList.remove('animated');
+    }
+
+    closeModalBtn.addEventListener('click', closeModal);
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Close modal on backdrop click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
     });
 
     // --- Helpers ---
     function validateEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    function highlightInvalidFields(name, email) {
-      if (name === '') document.getElementById('name').classList.add('invalid-input');
-      if (!validateEmail(email)) document.getElementById('email').classList.add('invalid-input');
     }
 
     function removeHighlights() {
@@ -128,15 +154,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('[data-scroll]');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        } else {
-          entry.target.classList.remove('visible');
-        }
+        entry.target.classList.toggle('visible', entry.isIntersecting);
       });
     }, { threshold: 0.1 });
 
     sections.forEach((section) => observer.observe(section));
+
+    // --- Back to top ---
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('hidden', window.scrollY < 400);
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
     // --- Footer contact form ---
     const footerForm = document.getElementById('footerContactForm');
