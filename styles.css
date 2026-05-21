@@ -383,6 +383,78 @@ body.dark .invalid-input {
   transform: translateY(-2px);
 }
 
+/* Honeypot field — hidden from humans, visible to bots */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Signature list items with avatar */
+.signature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.sig-avatar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.sig-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sig-name {
+  font-size: 0.875rem;
+  color: #1f2937;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+body.dark .sig-name {
+  color: #f3f4f6;
+}
+
+.sig-message {
+  font-weight: 400;
+  color: #4b5563;
+}
+
+body.dark .sig-message {
+  color: #9ca3af;
+}
+
+.sig-time {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  margin-top: 1px;
+}
+
+/* Inline field errors */
+.field-error {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
 /* Reduced Motion */
 body.reduce-motion .fade-in-section {
   opacity: 1;
