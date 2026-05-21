@@ -24,6 +24,7 @@
       }
     }
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script defer src="script.js"></script>
 </head>
@@ -89,12 +90,25 @@
           <p class="text-lg text-white">Join our mission to make high-quality education accessible to all! Sign the petition below and help make a meaningful difference in the lives of millions.</p>
         </div>
       </div>
-      <div id="signatureList" class="w-full md:w-6/12 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 ml-0 md:ml-4 h-auto overflow-y-auto signature-list-box">
-        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 border-b border-gray-300 dark:border-gray-600 pb-4">Signatures</h3>
-        <p id="signatureCount" aria-live="polite" class="text-gray-700 dark:text-gray-300 mb-4 font-medium">Total Signatures: 0</p>
-        <ul class="list-disc pl-6 space-y-3">
-          <!-- Signatures added dynamically via JavaScript -->
-        </ul>
+      <div id="signatureList" class="w-full md:w-6/12 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 ml-0 md:ml-4">
+        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-300 dark:border-gray-600 pb-4">Signatures</h3>
+        <!-- Progress bar -->
+        <div class="mb-5">
+          <div class="flex justify-between items-center mb-1">
+            <p id="signatureCount" aria-live="polite" class="text-gray-700 dark:text-gray-300 text-sm font-semibold">0 signatures</p>
+            <span id="signatureProgress" class="text-gray-500 dark:text-gray-400 text-sm">0 / 1,000</span>
+          </div>
+          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+            <div id="progressBar" class="h-3 rounded-full transition-all duration-700" style="width: 0%; background: linear-gradient(to right, #800020, #FFD700);"></div>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Help us reach our goal of 1,000 signatures!</p>
+        </div>
+        <!-- Scrollable signature list -->
+        <div class="max-h-52 overflow-y-auto pr-1">
+          <ul class="space-y-2">
+            <!-- Signatures added dynamically via JavaScript -->
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -197,21 +211,30 @@
       <h3 class="text-4xl font-bold text-gray-900 dark:text-white">Sign the Petition</h3>
       <p class="text-lg text-gray-600 dark:text-gray-400 mt-4 max-w-md mx-auto">Support our cause for universal access to high-quality education by signing the petition below.</p>
       <form id="petitionForm" novalidate class="bg-white dark:bg-gray-800 shadow-2xl rounded-lg p-8 mt-8 max-w-2xl mx-auto border border-gray-200 dark:border-gray-600">
-        <div class="grid grid-cols-2 gap-6 mb-6">
+        <!-- Honeypot: hidden from humans, catches bots -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="hp_website">Website</label>
+          <input type="text" id="hp_website" name="hp_website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="grid grid-cols-2 gap-6 mb-2">
           <div class="col-span-2 md:col-span-1">
             <label for="name" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Name: <span class="text-red-500" aria-hidden="true">*</span></label>
-            <input type="text" id="name" name="name" required autocomplete="name" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg" placeholder="Your Full Name" aria-required="true">
+            <input type="text" id="name" name="name" required autocomplete="name" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg" placeholder="Your Full Name" aria-required="true" aria-describedby="nameError">
+            <p id="nameError" role="alert" class="field-error hidden text-red-600 dark:text-red-400 text-xs mt-1"></p>
           </div>
           <div class="col-span-2 md:col-span-1">
             <label for="email" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Email: <span class="text-red-500" aria-hidden="true">*</span></label>
-            <input type="email" id="email" name="email" required autocomplete="email" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg" placeholder="Your Email" aria-required="true">
+            <input type="email" id="email" name="email" required autocomplete="email" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg" placeholder="Your Email" aria-required="true" aria-describedby="emailError">
+            <p id="emailError" role="alert" class="field-error hidden text-red-600 dark:text-red-400 text-xs mt-1"></p>
           </div>
         </div>
-        <div class="mb-6">
+        <div class="mb-6 mt-4">
           <label for="message" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Message (optional):</label>
-          <textarea id="message" name="message" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg h-32" placeholder="Write a message of support..."></textarea>
+          <textarea id="message" name="message" maxlength="500" class="form-input focus:ring focus:ring-yellow-500 focus:outline-none w-full p-4 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg h-32" placeholder="Write a message of support..."></textarea>
+          <div class="flex justify-end mt-1">
+            <span id="charCount" class="text-xs text-gray-400 dark:text-gray-500 transition-colors duration-200">0 / 500</span>
+          </div>
         </div>
-        <div role="alert" id="formError" class="hidden mb-4 p-3 bg-red-50 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-200 text-sm"></div>
         <button type="submit" class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
           Sign Now
         </button>
@@ -227,6 +250,14 @@
       <h3 id="modalTitle" class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Thank You!</h3>
       <p id="modalMessage" class="text-gray-700 dark:text-gray-300 mb-4"></p>
       <img id="modalImage" src="Assets/giphy.gif" alt="Celebration animation" class="w-32 h-32 mx-auto transform transition-transform duration-500 hidden" loading="lazy">
+      <!-- Share prompt -->
+      <div id="shareSection" class="hidden mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+        <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Spread the word:</p>
+        <div class="flex gap-2">
+          <input id="shareText" type="text" readonly class="flex-1 text-xs p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 truncate min-w-0">
+          <button id="copyShareBtn" class="shrink-0 bg-gray-800 dark:bg-gray-600 text-white text-xs px-3 py-2 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-500 transition duration-200 font-medium">Copy</button>
+        </div>
+      </div>
     </div>
   </div>
 
